@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:permission_handler/permission_handler.dart';
 import 'call.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -36,13 +36,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => VideoConferencePage(
-                                  conferenceID: conferenceId.text,
-                                )));
+                  onPressed: () async {
+                    var status = await Permission.camera.request();
+
+                    if (status == PermissionStatus.granted) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => VideoConferencePage(
+                                    conferenceID: conferenceId.text,
+                                  )));
+                    } else {
+                      print('Estado del permiso: $status');
+                    }
                   },
                   child: const Text("join"))
             ],

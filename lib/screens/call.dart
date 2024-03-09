@@ -7,7 +7,7 @@ import '../secrets.dart';
 
 final userId = Random().nextInt(1000).toString();
 
-class VideoConferencePage extends StatelessWidget {
+class VideoConferencePage extends StatefulWidget {
   final String conferenceID;
 
   const VideoConferencePage({
@@ -15,6 +15,11 @@ class VideoConferencePage extends StatelessWidget {
     required this.conferenceID,
   }) : super(key: key);
 
+  @override
+  State<VideoConferencePage> createState() => _VideoConferencePageState();
+}
+
+class _VideoConferencePageState extends State<VideoConferencePage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -25,8 +30,9 @@ class VideoConferencePage extends StatelessWidget {
             .appSign, // Fill in the appSign that you get from ZEGOCLOUD Admin Console.
         userID: userId,
         userName: 'user_name_$userId',
-        conferenceID: conferenceID,
-        config: ZegoUIKitPrebuiltVideoConferenceConfig(),
+        conferenceID: widget.conferenceID,
+        config: ZegoUIKitPrebuiltVideoConferenceConfig(
+        ),
       ),
     );
   }
